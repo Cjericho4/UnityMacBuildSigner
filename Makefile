@@ -14,7 +14,8 @@ sign:
 	@chmod -R a+xr $(APP).app
 	@echo "Sign the application and any underlying DLLS"
 	@echo ""
-	@find ./$(APP).app -type f -exec codesign --timestamp --keychain /Users/$(USER)/Library/Keychains/login.keychain-db -s $(DEV_ID) -f --verbose=9 --deep --options=runtime --entitlements "cAnatomy.entitlements" {} +
+	@find ./$(APP).app -type f -exec codesign --timestamp --keychain /Users/$(USER)/Library/Keychains/login.keychain-db -s $(DEV_ID) -f --verbose=9 --deep --options=runtime --entitlements "generic.entitlements" {} +
+	@codesign --timestamp --keychain /Users/$(USER)/Library/Keychains/login.keychain-db -s $(DEV_ID) -f --verbose=9 --deep --options=runtime --entitlements "generic.entitlements" $(APP).app
 	@echo "Zip application to upload for notarization"
 	@ditto --keepParent -c -k --sequesterRsrc "$(APP).app" "$(VERSION)cAnatomy.zip" 
 	@echo "Upload to Apples Notarization service"
